@@ -1,4 +1,8 @@
 # TorScraperPro: Comprehensive Technical Overview
+## Legal Disclaimer
+
+### Educational Use and Compliance with Local Laws
+This script is provided for educational purposes only. Users are responsible for ensuring that their use of the script complies with local legal laws and regulations. The originator of this code disclaims any responsibility for unethical or illegal use of the script. Users should exercise due diligence and respect the terms of service and data usage policies of the websites they interact with using this script.
 
 ## Introduction
 
