@@ -65,6 +65,12 @@ Options include:
 ## Flask Web Server
 
 Initiated at script startup, the Flask app presents a simple yet effective interface for real-time access to the scraped content. It facilitates navigation between current and archived runs, enhancing the review process of collected data.
+Current Run page
+![Screenshot 2024-03-19 at 16 45 06](https://github.com/0999ad/DarkWebScraper/assets/34707278/947027f7-580f-4eb8-9270-0f5dbfabd5c4)
+
+Previous runs page
+
+![Screenshot 2024-03-19 at 16 45 23](https://github.com/0999ad/DarkWebScraper/assets/34707278/7209d4a6-4e23-4662-ad15-14f705d61469)
 
 ## Conclusion
 
