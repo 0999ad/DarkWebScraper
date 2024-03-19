@@ -1,69 +1,71 @@
-# Extended DWScraper v1.3 Technical Overview
+# TorScraperPro: Comprehensive Technical Overview
 
 ## Introduction
 
-Extended DWScraper is a sophisticated Python-based web scraping tool designed to extract content from a predefined list of websites, including those hosted on the Tor network (.onion sites). It automatically checks each site for specified keywords and conditionally extracts content based on keyword matches. The tool supports extended timeouts for .onion sites and serves the scraped HTML files locally via a Flask application for live updates.
+TorScraperPro is an advanced Python-based web scraping and content extraction tool. Designed for both privacy and efficiency, it navigates the web, including the Tor network, to extract content from specified websites based on user-defined keywords. Utilizing headless Chrome integrated with Selenium WebDriver, TorScraperPro effectively captures dynamic content. A Flask application dynamically serves the scraped HTML files, providing live updates and easy access to the data collected.
 
 ## Features
 
-- **TOR Network Support**: The scraper can route requests through the TOR network, ensuring privacy and the ability to scrape .onion websites.
-- **Keyword-Based Scraping**: Only extracts and saves content from websites containing specified keywords, allowing for targeted data collection.
-- **Selenium Integration**: Utilizes Selenium WebDriver to handle JavaScript-heavy websites, ensuring dynamic content is rendered and captured.
-- **Flask Web Server**: Dynamically serves the scraped HTML files through a local Flask web server, enabling live updates and easy access to scraped data.
-- **Automatic ChromeDriver Management**: Leveraging `webdriver_manager`, the script automatically downloads and uses the correct ChromeDriver version based on the installed Google Chrome browser.
+- **TOR Network Support**: Routes requests through the TOR network to ensure anonymity, enabling the scraping of .onion websites while maintaining user privacy.
+- **Keyword-Based Scraping**: Focuses on extracting content that contains specified keywords, facilitating targeted data collection.
+- **Dynamic Content Rendering**: With Selenium WebDriver, the tool can interact with JavaScript-heavy pages, ensuring comprehensive content capture.
+- **Live Data Presentation**: A local Flask web server serves the scraped HTML files, offering a dashboard for live monitoring and access to scraped data.
+- **Automatic ChromeDriver Management**: The script employs `webdriver_manager` to automatically select and use the correct ChromeDriver version, ensuring compatibility with the installed Google Chrome browser.
+- **Flask Dashboard**: Provides a user-friendly interface for reviewing scraping outcomes, enhancing usability and accessibility.
 
 ## Dependencies
 
-- Python 3.6+
+- Python 3.6 or later
 - Flask
 - Requests
 - BeautifulSoup4
 - Selenium WebDriver
-- WebDriver_Manager
-- TOR (Optional for .onion sites)
+- webdriver_manager
+- Tor (Optional for .onion site scraping)
 
 ## Installation and Setup
 
-1. **Python and Dependencies**: Ensure Python 3.6+ is installed. Install all required Python packages using pip:
+1. **Install Python and Dependencies**:
+    Ensure Python 3.6+ is installed on your system. Install the required Python packages using pip:
 
     ```bash
     pip install flask requests beautifulsoup4 selenium webdriver_manager
     ```
 
-2. **Google Chrome**: Install the latest version of Google Chrome.
+2. **Google Chrome**:
+    Install the latest version of Google Chrome to ensure compatibility with ChromeDriver.
 
-3. **TOR (Optional)**: Install and configure TOR if you plan to scrape .onion sites.
+3. **TOR (Optional)**:
+    For scraping .onion sites, install and configure TOR on your system.
 
-4. **Clone the Repository**: Clone the Extended DWScraper repository to your local machine.
+4. **Clone the Repository**:
+    Obtain the TorScraperPro script by cloning its repository to your local machine.
 
-## Usage
+## Running Instructions
 
-Run the script from the command line, specifying the desired options:
+Execute TorScraperPro from the command line with the desired parameters:
 
 ```bash
-python extended_dwscraper.py -v -d <Depth> -p <Pause> -f <Output Folder Prefix>
+python TorScraperPro.py -v -d <Depth> -p <Pause>
 ```
 
-- `-v`: Enable verbose logging.
-- `-d <Depth>`: Set the scraping depth (integer).
-- `-p <Pause>`: Set the pause duration between requests (seconds).
-- `-f <Output Folder Prefix>`: Specify the prefix for the output directory where scraped content will be stored.
+Options include:
+- `-v`: Enables verbose logging for detailed operational insights.
+- `-d <Depth>`: Defines the scraping depth for website traversal.
+- `-p <Pause>`: Sets a pause duration between requests to mitigate server load and mimic human interaction.
 
 ## Key Functions
 
-- **`setup_tor_proxy()`**: Configures HTTP and HTTPS proxies for routing requests through the TOR network.
-- **`check_tor(verbose=False)`**: Verifies connectivity to the TOR network and logs the TOR IP address.
-- **`load_keywords(filepath='keywords.txt')`**: Loads keywords from a specified file. These keywords are used to filter which sites to scrape based on content matches.
-- **`site_contains_keywords(url, keywords, proxies)`**: Checks if a given site contains any of the specified keywords.
-- **`folder(name, verbose=False)`**: Creates a directory for storing scraped content.
-- **`scrape_and_extract(url, depth, pause, out_path, proxies, verbose=False, keyword_str="")`**: Main scraping function. Utilizes Selenium WebDriver to navigate to a URL, render JavaScript if necessary, and extract content based on keyword matches.
-- **`get_sites_from_markdown()`**: Fetches a list of sites to scrape from a predefined markdown file hosted on GitHub.
-- **Flask App Routes**: Defines routes for serving the scraped HTML files through a local web server.
+- **`setup_chrome()`**: Initializes a headless Chrome browser session for web interaction.
+- **`check_tor_connection()`**: Verifies connectivity to the TOR network and logs the TOR-assigned IP address.
+- **`get_keywords()`**: Loads keywords from a specified file, guiding the scraping focus.
+- **`scrape_and_extract()`**: Core function that navigates to URLs, renders JavaScript, and extracts content based on keyword matches.
+- **Flask Web Server**: Runs concurrently in a separate thread, serving scraped content through a user-friendly dashboard.
 
 ## Flask Web Server
 
-The Flask application starts in a separate thread, ensuring it begins serving immediately upon script execution. It provides a simple interface for accessing scraped content stored as HTML files within the specified directory.
+Initiated at script startup, the Flask app presents a simple yet effective interface for real-time access to the scraped content. It facilitates navigation between current and archived runs, enhancing the review process of collected data.
 
 ## Conclusion
 
-Extended DWScraper v1.3 is a powerful tool for privacy-conscious, keyword-targeted web scraping, especially useful for dynamic content and .onion sites. Its integration with Selenium and Flask makes it a versatile solution for various scraping and content serving needs.
+TorScraperPro version 1.0 emerges as a powerful solution for sophisticated web scraping needs, emphasizing privacy through TOR integration and flexibility with dynamic content handling. Its user-friendly dashboard and targeted scraping capabilities make it an invaluable tool for data analysts, researchers, and cybersecurity professionals.
