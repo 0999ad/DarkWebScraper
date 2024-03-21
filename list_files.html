@@ -32,11 +32,19 @@
             text-decoration: none; /* No underline */
             transition: color 0.3s ease; /* Smooth color transition */
         }
+        .warning {
+            color: #ffa500; /* Orange color for warning */
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body class="text-light bg-dark">
     <div class="container-fluid">
         <h1 class="text-center mb-4">{{ title }}</h1>
+        <!-- Warning about live links -->
+        <p class="warning">The links below are live. Warning: The pages that open are from the Deep and Dark Web. Clicking on content contained in the pages is at your own risk!</p>
         <div class="list-group">
             {% for file in files %}
                 <a href="{{ url_for('serve_html_file', filename=file) }}" class="list-group-item list-group-item-action">{{ file }}</a>
