@@ -70,7 +70,7 @@ Options include:
 
 Initiated at script startup, the Flask app presents a simple yet effective interface for real-time access to the scraped content. It facilitates navigation between current and archived runs, enhancing the review process of collected data.
 Current Run page
-![Screenshot 2024-03-19 at 16 45 06](https://github.com/0999ad/DarkWebScraper/assets/34707278/947027f7-580f-4eb8-9270-0f5dbfabd5c4)
+<img width="1783" alt="Screenshot 2024-03-21 at 16 40 27" src="https://github.com/0999ad/DarkWebScraper/assets/34707278/6ab00cf0-61dc-4e07-b9a8-391005a3bea3">
 
 Previous runs page
 
