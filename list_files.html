@@ -4,45 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }}</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
-            background-color: #1e1e2e;
-            color: #00ff99;
-            font-family: 'Courier New', Courier, monospace;
-            text-align: center;
-            margin: 0;
-            padding: 20px; /* Ensures padding around the content for border effect */
+            background-color: #343a40; /* Dark theme background */
+            color: #0f0; /* Green text as base color */
+            padding: 20px; /* Added padding around the entire body for a border effect */
+        }
+        .container-fluid {
+            padding: 20px;
+            background-color: #23272b; /* Slightly lighter dark shade */
+            color: #ff0000; /* Red text for emphasis */
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.7);
+            margin: 20px auto; /* Added margin to ensure there's space around the container */
         }
         h1, h2 {
             color: #ff0066;
         }
-        ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0 auto; /* Center the list if needed */
-            display: inline-block; /* Adjust display for centering */
-            text-align: left; /* Align text to the left in the list */
+        .list-group-item {
+            background-color: #1e1e2e;
+            border: 1px solid #333; /* Dark border for list items */
         }
-        li {
-            margin: 10px 0;
-        }
-        a {
-            color: #00ff99;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        a:hover {
-            color: #ff0066;
+        a, .list-group-item-action:hover {
+            color: #ff0066; /* Link color and hover effect */
+            text-decoration: none; /* No underline */
+            transition: color 0.3s ease; /* Smooth color transition */
         }
     </style>
 </head>
-<body>
-    <h1>{{ title }}</h1>
-    <ul>
-        {% for file in files %}
-            <li><a href="{{ url_for('serve_html_file', filename=file) }}">{{ file }}</a></li>
-        {% endfor %}
-    </ul>
-    <a href="{{ back_link_url }}">{{ back_link_text }}</a>
+<body class="text-light bg-dark">
+    <div class="container-fluid">
+        <h1 class="text-center mb-4">{{ title }}</h1>
+        <div class="list-group">
+            {% for file in files %}
+                <a href="{{ url_for('serve_html_file', filename=file) }}" class="list-group-item list-group-item-action">{{ file }}</a>
+            {% endfor %}
+        </div>
+        <a href="{{ back_link_url }}" class="btn btn-outline-danger mt-3">{{ back_link_text }}</a>
+    </div>
+
+    <!-- Optional JavaScript and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
