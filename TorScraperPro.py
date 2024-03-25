@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-TorScraperPro Version 1.0 for sophisticated web scraping and content extraction,
+TorScraperPro Version 1.1 for sophisticated web scraping and content extraction,
 using headless Chrome with Tor for anonymity. Includes functionalities like Tor connection verification,
 archive management, enhanced user and CLI feedback, and a Flask dashboard for monitoring.
 
@@ -25,6 +25,7 @@ from selenium.webdriver.chrome.options import Options
 import logging
 from selenium.common.exceptions import WebDriverException
 import re
+from concurrent.futures import ThreadPoolExecutor
 
 app = Flask(__name__)
 
@@ -58,8 +59,15 @@ def get_keywords():
         return [line.strip() for line in file.readlines()]
 
 def get_sites():
-    response = requests.get("https://raw.githubusercontent.com/fastfire/deepdarkCTI/main/forum.md")
-    sites = re.findall(r'\((https?://[^\s)]+)\)', response.text)
+    urls = [
+        "https://raw.githubusercontent.com/fastfire/deepdarkCTI/main/forum.md",
+        "https://raw.githubusercontent.com/fastfire/deepdarkCTI/main/exploits.md",
+        "https://raw.githubusercontent.com/fastfire/deepdarkCTI/main/maas.md"
+    ]
+    sites = []
+    for url in urls:
+        response = requests.get(url)
+        sites += re.findall(r'\((https?://[^\s)]+)\)', response.text)
     return sites
 
 def archive_old_runs():
@@ -69,7 +77,8 @@ def archive_old_runs():
         if file.endswith('.html'):
             shutil.move(os.path.join(BASE_DIR, file), OLD_RUNS_DIR)
 
-def scrape_and_extract(url, pause, keywords, driver):
+def scrape_and_extract(url, pause, keywords):
+    driver = setup_chrome()
     try:
         driver.get(url)
         time.sleep(pause)
@@ -79,13 +88,19 @@ def scrape_and_extract(url, pause, keywords, driver):
         return
     soup = BeautifulSoup(driver.page_source, 'html.parser')
     text = soup.get_text().lower()
+    match_found = False
     for keyword in keywords:
         if keyword.lower() in text:
+            match_found = True
             now = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
             filename = f"{now}_{keyword}_{urlparse(url).netloc.replace('.', '_')}.html"
             filepath = os.path.join(BASE_DIR, filename)
             with open(filepath, 'w', encoding='utf-8') as file:
                 file.write(soup.prettify())
+            break
+    if match_found:
+        logging.info(f"Content matched and saved from: {url}")
+    driver.quit()
 
 @app.route('/')
 def list_html_files():
@@ -116,14 +131,12 @@ def main_scraping():
         logging.getLogger().setLevel(logging.DEBUG)
 
     check_tor_connection()
-    driver = setup_chrome()
     keywords = get_keywords()
     sites = get_sites()
 
-    for site in sites:
-        scrape_and_extract(site, args.pause, keywords, driver)
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        tasks = [executor.submit(scrape_and_extract, site, args.pause, keywords) for site in sites]
     
-    driver.quit()
     end_time = time.time()
     print(f"Script took {end_time - start_time:.2f} seconds\nPlease Press CTRL+C to quit")
 
